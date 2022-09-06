@@ -1,13 +1,10 @@
 # Application definition
 from pathlib import Path
-import os
-from typing import Optional, Union
-import environ
-from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-INSTALLED_APPS = [
+DEFAULT_APPS = [
+    # add default apps here
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -15,6 +12,17 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 ]
+CREATED_APPS = [
+    # add created apps here
+    "blogs.blog.apps.BlogConfig",
+]
+
+THIRD_PARTY_APPS = [
+    # add third-party apps here
+]
+
+INSTALLED_APPS = [*DEFAULT_APPS, *CREATED_APPS, *THIRD_PARTY_APPS]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

@@ -14,8 +14,18 @@ prod-shell:
 	python manage.py shell --settings=config.settings.prod
 
 dev-install:
-	pip install -r requirements/dev.txt
+	pip3 install -r requirements/dev.txt
 
 prod-install:
-	pip install -r requirements/prod.txt
+	pip3 install -r requirements/prod.txt
 
+migrate:
+	python manage.py migrate
+dev-makemigration:
+	python manage.py makemigrations $(m) --settings=config.settings.dev
+
+prod-makemigration:
+	python manage.py makemigrations $(m) --settings=config.settings.prod
+
+dev-invest:
+	python manage.py sqlmigrate $(m) $(i) --settings=config.settings.dev

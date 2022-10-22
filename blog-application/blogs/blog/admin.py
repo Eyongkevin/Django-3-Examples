@@ -17,6 +17,7 @@ class PostAdmin(admin.ModelAdmin):
     )
     list_filter = ("status", "publish")
     search_fields: Sequence[str] = ("title", "body")
+    # TODO: 'prepopulated_fields' Do not work for updates
     prepopulated_fields: Dict(str, Sequence[str]) = {"slug": ("title",)}
     raw_id_fields: Sequence[str] = ("author",)
     date_hierarchy: Optional[str] = "publish"

@@ -15,10 +15,12 @@ DEFAULT_APPS = [
 CREATED_APPS = [
     # add created apps here
     "blogs.blog.apps.BlogConfig",
+    "blogs.comment.apps.CommentConfig",
 ]
 
 THIRD_PARTY_APPS = [
     # add third-party apps here
+    "taggit",
 ]
 
 INSTALLED_APPS = [*DEFAULT_APPS, *CREATED_APPS, *THIRD_PARTY_APPS]
@@ -39,7 +41,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [str(BASE_DIR.joinpath("templates"))],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -91,8 +93,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = "/static/"
+STATIC_URL = "/static/"  # str(BASE_DIR.joinpath("static")) + "/"
 
+STATICFILES_DIRS = [str(BASE_DIR.joinpath("blogs", "auth", "static"))]
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

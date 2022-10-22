@@ -21,6 +21,10 @@ prod-install:
 
 migrate:
 	python manage.py migrate
+
+dev-migrate:
+	python manage.py migrate --settings=config.settings.dev
+	
 dev-makemigration:
 	python manage.py makemigrations $(m) --settings=config.settings.dev
 

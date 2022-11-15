@@ -9,6 +9,7 @@ from django.contrib.postgres.search import (
     SearchRank,
     TrigramSimilarity,
 )
+from django.db.models.functions import Greatest
 from .models import Post
 from blogs.comment.models import Comment
 from blogs.comment.forms import CommentForm
@@ -129,7 +130,10 @@ def post_search(request):
             results = (
                 Post.objects.annotate(
                     # rank=SearchRank(search_vector, search_query)
-                    similarity=TrigramSimilarity("title", query)
+                    similarity=Greatest(
+                        TrigramSimilarity("title", query),
+                        TrigramSimilarity("body", query),
+                    )
                 )
                 .filter(similarity__gte=0.1)
                 .order_by("-similarity")

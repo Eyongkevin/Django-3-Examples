@@ -70,7 +70,7 @@ class Post(TimeStampedModel):
     def __str__(self) -> str:
         return f"{self.title}"
 
-    @cached_property
+    # @cached_property
     def get_absolute_url(self):
         return reverse(
             "blog:post_detail",

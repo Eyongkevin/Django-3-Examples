@@ -1,6 +1,8 @@
 # Application definition
 from pathlib import Path
 
+SITE_ID = 1
+
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 DEFAULT_APPS = [
@@ -11,6 +13,8 @@ DEFAULT_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
+    "django.contrib.sitemaps",
 ]
 CREATED_APPS = [
     # add created apps here

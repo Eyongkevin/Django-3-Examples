@@ -4,3 +4,4 @@ sqlparse==0.4.2
 django-environ==0.9.0
 django-model-utils==4.2.0
 django-taggit==3.0.0
+Markdown==3.4.1

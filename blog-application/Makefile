@@ -25,6 +25,8 @@ migrate:
 dev-migrate:
 	python manage.py migrate --settings=config.settings.dev
 	
+prod-migrate:
+	python manage.py migrate --settings=config.settings.prod
 dev-makemigration:
 	python manage.py makemigrations $(m) --settings=config.settings.dev
 

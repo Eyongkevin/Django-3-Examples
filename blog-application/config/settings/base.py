@@ -15,6 +15,7 @@ DEFAULT_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.sitemaps",
+    "django.contrib.postgres",
 ]
 CREATED_APPS = [
     # add created apps here

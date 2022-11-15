@@ -3,11 +3,12 @@ from django.views.generic import ListView, TemplateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from .models import Post
 from blogs.comment.models import Comment
 from blogs.comment.forms import CommentForm
 from . import mixins
-from .form import EmailPostForm
+from .form import EmailPostForm, SearchForm
 from blogs.core.utils import admin_required, check_if_admin
 from django.conf import settings
 from taggit.models import Tag
@@ -104,4 +105,28 @@ def post_share(request, post_id):
         form = EmailPostForm()
     return render(
         request, "blog/post/share.html", {"post": post, "form": form, "sent": sent}
+    )
+
+
+def post_search(request):
+    query = None
+    form = SearchForm()
+    results = []
+    if "query" in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data["query"]
+            search_vector = SearchVector("title", "body")
+            search_query = SearchQuery(query)
+            results = (
+                Post.objects.annotate(
+                    search=search_vector, rank=SearchRank(search_vector, search_query)
+                )
+                .filter(search=query)
+                .order_by("-rank")
+            )
+    return render(
+        request,
+        "blog/post/searchme.html",
+        {"form": form, "query": query, "results": results},
     )

@@ -20,7 +20,7 @@ prod-install:
 	pip3 install -r requirements/prod.txt
 
 migrate:
-	python manage.py migrate
+	python manage.py migrate --settings=config.settings.prod
 
 dev-migrate:
 	python manage.py migrate --settings=config.settings.dev

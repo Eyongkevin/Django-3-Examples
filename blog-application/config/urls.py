@@ -26,7 +26,8 @@ urlpatterns = [
     # path("", RedirectView.as_view(pattern_name="blog:post_view"), name="register"),
     path("about", AboutUsView.as_view(), name="about_us"),
     path("", HomeView.as_view(), name="home"),
-    path("admin/", admin.site.urls),
+    path("admin/", include("admin_honeypot.urls", namespace="admin_honeypot")),
+    path("management/", admin.site.urls),
     path("blog/", include("blogs.blog.urls", namespace="blog")),
     path("auth/", include("blogs.auth.urls", namespace="auth")),
     path(

@@ -26,6 +26,7 @@ CREATED_APPS = [
 THIRD_PARTY_APPS = [
     # add third-party apps here
     "taggit",
+    "admin_honeypot",
 ]
 
 INSTALLED_APPS = [*DEFAULT_APPS, *CREATED_APPS, *THIRD_PARTY_APPS]
@@ -39,6 +40,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "csp.middleware.CSPMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -68,9 +70,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "OPTIONS": {"max_similarity": 0.5},
     },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "OPTIONS": {"max_length": 12},
     },
     {
         "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
@@ -100,12 +104,29 @@ USE_TZ = True
 
 STATIC_URL = "/static/"  # str(BASE_DIR.joinpath("static")) + "/"
 
-STATICFILES_DIRS = [str(BASE_DIR.joinpath("blogs", "auth", "static"))]
+STATICFILES_DIRS = [
+    str(BASE_DIR.joinpath("static"))
+]  # [str(BASE_DIR.joinpath("blogs", "auth", "static"))]
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# CSP(Content Security Policy) Configs
+CSP_DEFAULT_SRC = [
+    "'self'",
+    "http://fonts.googleapis.com/css?family=Muli",
+]
+CSP_SCRIPT_SRC = [
+    "'self'",
+    "http://fonts.googleapis.com/",
+]
+CSP_FONT_SRC = [
+    "'self'",
+    "http://fonts.gstatic.com/s/muli/v28/7Aulp_0qiz-aVz7u3PJLcUMYOFnOkEk40e6fwniDtzNAAw.woff",
+    "http://fonts.gstatic.com/s/muli/v28/7Aulp_0qiz-aVz7u3PJLcUMYOFnOkEk50e6fwniDtzNAAw.woff",
+    "http://fonts.gstatic.com/s/muli/v28/7Aulp_0qiz-aVz7u3PJLcUMYOFnOkEk30e6fwniDtzM.woff",
+]
 
 # def get_env_variables(
 #     var_name: str,

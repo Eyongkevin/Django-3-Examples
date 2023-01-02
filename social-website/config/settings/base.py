@@ -28,6 +28,7 @@ DEFAULT_APPS = [
 ]
 CREATED_APPS = [
     # add created apps here
+    "bookmarks.account.apps.AccountConfig",
 ]
 
 THIRD_PARTY_APPS = [

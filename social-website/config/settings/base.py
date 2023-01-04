@@ -35,7 +35,9 @@ THIRD_PARTY_APPS = [
     # add third-party apps here
 ]
 
-INSTALLED_APPS = [*DEFAULT_APPS, *CREATED_APPS, *THIRD_PARTY_APPS]
+# created apps are added first so that our app templates will be fetch first before any
+# default django template
+INSTALLED_APPS = [*CREATED_APPS, *DEFAULT_APPS, *THIRD_PARTY_APPS]
 
 
 MIDDLEWARE = [
@@ -53,7 +55,10 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [str(BASE_DIR.joinpath("templates"))],
+        "DIRS": [
+            str(BASE_DIR.joinpath("templates")),
+            # str(BASE_DIR.joinpath("bookmarks", "account" "templates")),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -106,9 +111,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [str(BASE_DIR.joinpath("static"))]
+STATICFILES_DIRS = [
+    str(BASE_DIR.joinpath("static")),
+    # str(BASE_DIR.joinpath("bookmarks", "account", "static")),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_REDIRECT_URL = "personal"  # default url = /accounts/profile/
+LOGIN_URL = "dj_login"  # default url = /accounts/registration/login/
+LOGOUT_URL = "dj_logout"  # default url = /accounts/registration/logout/

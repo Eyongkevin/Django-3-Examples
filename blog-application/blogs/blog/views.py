@@ -1,23 +1,25 @@
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, TemplateView, CreateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.postgres.search import (
-    SearchVector,
     SearchQuery,
     SearchRank,
+    SearchVector,
     TrigramSimilarity,
 )
+from django.core.mail import send_mail
 from django.db.models.functions import Greatest
-from .models import Post
-from blogs.comment.models import Comment
+from django.shortcuts import get_object_or_404, render
+from django.views.generic import CreateView, ListView, TemplateView
+from taggit.models import Tag
+
 from blogs.comment.forms import CommentForm
+from blogs.comment.models import Comment
+from blogs.core.utils import admin_required, check_if_admin
+
 from . import mixins
 from .form import EmailPostForm, SearchForm
-from blogs.core.utils import admin_required, check_if_admin
-from django.conf import settings
-from taggit.models import Tag
+from .models import Post
 from .utils import search_filter
 
 # Create your views here.
@@ -42,7 +44,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     fields = ["title", "slug", "author", "body", "status"]
 
 
-@login_required
+# @login_required
 def post_list(request, tag_slug=None):
     # request = check_if_admin(request)
     object_list: Post = Post.post.published()

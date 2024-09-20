@@ -35,3 +35,6 @@ prod-makemigration:
 
 dev-invest:
 	python manage.py sqlmigrate $(m) $(i) --settings=config.settings.dev
+
+dev-cs:
+	python manage.py collectstatic --settings=config.settings.dev

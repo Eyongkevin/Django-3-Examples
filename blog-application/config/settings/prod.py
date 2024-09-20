@@ -1,7 +1,8 @@
 import os
-import environ
-from .base import *
 
+import environ
+
+from .base import *
 
 env = environ.Env(DEBUG=(bool, False))
 
@@ -24,3 +25,5 @@ DATABASES = {
         "PORT": "5432",
     }
 }
+
+LOGIN_URL = "authen:login"
